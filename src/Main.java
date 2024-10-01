@@ -4,32 +4,17 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        initializeGame(scanner);
+        UI.start();
+    }
 
-        Game.initialize(5,"easy"); // take input from user
-        Game.countMinesOnBoard();
-        Game.checkMines();
-        Game.printBoard(false);
+    private static void initializeGame(Scanner s) {
+        System.out.println("Enter size of the board");
+        int size = Integer.parseInt(s.nextLine()); // add exception handling and input validation and while loop
 
-        while (true) {
-            System.out.println("Choose an action: ");
-            System.out.println("1. Open a cell");
-            System.out.println("2. Mark/unmark a cell as a mine");
+        System.out.println("Enter difficulty (easy, normal, hard)");
+        String difficulty = s.nextLine(); // add exception handling and input validation and while loop
 
-            int choice = scanner.nextInt();
-
-            switch (choice) {
-                case 1:
-                    UI.openCell();
-                    break;
-                case 2:
-                    UI.markMine();
-                    break;
-                default:
-                    System.out.println("Invalid choice! Please select 1 or 2.");
-                    break;
-            }
-
-            UI.determineWinner();
-        }
+        Game.initialize(size, difficulty);
     }
 }

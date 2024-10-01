@@ -1,9 +1,9 @@
 import java.util.Random;
 
-
-public class Game {
+public abstract class Game {
     private static Cell[][] board;
     private static int boardSize;
+    private static String gameDifficulty;
     private static int safeCells;
     private static int amountOfMines;
 
@@ -21,17 +21,20 @@ public class Game {
 
     public static void initialize(int size, String difficulty) {
         boardSize = size;
+        gameDifficulty = difficulty;
 
-        initializeBoard(size);
-        calculateAmountOfMines(difficulty, size);
-        placeMines(difficulty);
+        initializeBoard();
+        calculateAmountOfMines();
+        placeMines();
+        countMinesOnBoard(); // debug
+        checkMines();
         safeCells = size * size - amountOfMines;
     }
 
-    private static void initializeBoard(int size) {
-        board = new Cell[size][size];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+    private static void initializeBoard() {
+        board = new Cell[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
                 board[i][j] = new Cell(i, j);
             }
         }
@@ -39,17 +42,17 @@ public class Game {
 
     // 3 x 3 = 9 cells
     // 5 x 5 = 25 cells
-    private static void calculateAmountOfMines(String difficulty, int size) {
-        if (difficulty.equalsIgnoreCase("easy")) {
-            amountOfMines = size;
-        } else if (difficulty.equalsIgnoreCase("normal")) {
-            amountOfMines = size + 2;
-        } else if (difficulty.equalsIgnoreCase("hard")) {
-            amountOfMines = size + size;
+    private static void calculateAmountOfMines() {
+        if (gameDifficulty.equalsIgnoreCase("easy")) {
+            amountOfMines = boardSize;
+        } else if (gameDifficulty.equalsIgnoreCase("normal")) {
+            amountOfMines = boardSize + 2;
+        } else if (gameDifficulty.equalsIgnoreCase("hard")) {
+            amountOfMines = boardSize + boardSize;
         }
     }
 
-    private static void placeMines(String difficulty) {
+    private static void placeMines() {
         Random rand = new Random();
         int placedMines = 0;
 
@@ -79,13 +82,11 @@ public class Game {
         System.out.println("Total number of mines on the board: " + mineCount);
     }
 
-
     public static void checkMines() {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if (!board[i][j].isMine()) {  // If the cell isn't a mine, count nearby mines
-                    int nearbyMines = countNearbyMines(i, j);
-                    board[i][j].setMinesAround(nearbyMines);
+                    board[i][j].setMinesAround(countNearbyMines(i, j));
                 }
             }
         }
@@ -108,7 +109,7 @@ public class Game {
     }
 
 
-    public static void revealCells(int x, int y) {
+    public static void revealCell(int x, int y) {
         Cell cell = board[x][y];
         if (!cell.isHidden()) {
             return;
@@ -122,7 +123,7 @@ public class Game {
                     int newX = x + i;
                     int newY = y + j;
                     if (isValid(newX, newY)) {
-                        revealCells(newX, newY);
+                        revealCell(newX, newY);
                     }
                 }
             }

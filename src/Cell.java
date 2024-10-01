@@ -1,4 +1,4 @@
-public class Cell {
+public final class Cell {
     private int x;
     private int y;
     private boolean isMine;

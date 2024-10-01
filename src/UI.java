@@ -1,52 +1,86 @@
 import java.util.Scanner;
 
-public class UI {
+public abstract class UI {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void openCell() {
-        System.out.println("Enter the row and column of the cell to reveal (e.g., '2 3'):");
-        int row = scanner.nextInt();
-        int col = scanner.nextInt();
-
-        if (Game.isValid(row, col)) {
-            if (Game.getBoard()[row][col].isMine()) {
-                System.out.println("You hit a mine! Game over.");
-                Game.revealAllMines();
-                Game.printBoard(true);
-                System.exit(0);
-            } else {
-                Game.revealCells(row, col);
-                Game.printBoard(false);
+    public static void start() {
+        while (true) {
+            Game.printBoard(false);
+            printOptions();
+            switch (scanner.nextLine()) {
+                case "1":
+                    handleRevealCellOption();
+                    break;
+                case "2":
+                    handleMarkMineOption();
+                    break;
+                case "3":
+                    System.exit(0);
+                default:
+                    System.out.println("Wrong input");
             }
-        } else {
-            System.out.println("Invalid input! Try again.");
+            determineWinner();
         }
     }
 
-    public static void markMine() {
-        System.out.println("Enter the row and column of the cell to mark/unmark as a mine (e.g., '2 3'):");
-        int row = scanner.nextInt();
-        int col = scanner.nextInt();
+    private static void printOptions() {
+        System.out.println("1 - Reveal cell");
+        System.out.println("2 - Mark/Unmark mine");
+        System.out.println("3 - exit");
+    }
 
-        if (Game.isValid(row, col)) {
-            Cell cell = Game.getCell(row, col);
-            if (cell.isHidden()) {
-                cell.setMarkedAsMine(!cell.isMarkedAsMine());
-                System.out.println("Cell marked/unmarked as a mine.");
-                Game.printBoard(false);
-            } else {
-                System.out.println("This cell is already revealed! You can't mark it.");
-            }
-        } else {
-            System.out.println("Invalid input! Try again.");
+    public static void handleRevealCellOption() {
+        System.out.println("Enter the row of the cell to reveal (e.g., '2'):");
+        int row = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter the row of the cell to reveal (e.g., '2'):");
+        int col = Integer.parseInt(scanner.nextLine());
+
+        if (!Game.isValid(row, col)) {
+            System.out.println("This cell doesn't exists");
+            return;
         }
+
+        if (!Game.getCell(row, col).isHidden()) {
+            System.out.println("This cell is already open");
+            return;
+        }
+
+        if (Game.getCell(row, col).isMine()) {
+            System.out.println("You hit a mine! Game over.");
+            Game.revealAllMines();
+            Game.printBoard(true);
+            System.exit(0);
+        } else {
+            Game.revealCell(row, col);
+        }
+    }
+
+    private static void handleMarkMineOption() {
+        System.out.println("Enter the row and column of the cell to mark/unmark as a mine (e.g., '2 3'):");
+        int row = Integer.parseInt(scanner.nextLine()); // add validation
+        int col = Integer.parseInt(scanner.nextLine()); // add validation
+
+        if (!Game.isValid(row, col)) {
+            System.out.println("This cell doesn't exists");
+            return;
+        }
+
+        Cell cell = Game.getCell(row, col);
+
+        if (!cell.isHidden()) {
+            System.out.println("This cell is already open");
+            return;
+        }
+
+        cell.setMarkedAsMine(!cell.isMarkedAsMine());
+        System.out.println("Cell marked/unmarked as a mine.");
     }
 
     public static void determineWinner() {
         if (Game.getSafeCells() == 0) {
             System.out.println("Congratulations! You've won the game!");
-            Game.printBoard(false);
+            Game.printBoard(true);
             System.exit(0);
         }
     }
