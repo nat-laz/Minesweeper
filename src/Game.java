@@ -4,13 +4,12 @@ import java.util.Random;
 public class Game {
     private static int boardSize = 5;
     private static int noOfMines = 3;
-    private static Cell[][] board;
+    static Cell[][] board;
     private static boolean[][] minesPlace = new boolean[boardSize][boardSize];
     private static int safeCells;
 
 
-
-    public static void initializeBoard() {
+    private static void initializeBoard() {
         board = new Cell[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -30,6 +29,7 @@ public class Game {
                     minesPlace[i][j] = true;
                 }
                 placedMines++;
+
             }
         }
     }
