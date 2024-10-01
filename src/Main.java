@@ -17,14 +17,14 @@ public class Main {
     private static int getBoardSize(Scanner scanner) {
         int size = 0;
         while (true) {
-            System.out.println("Enter size of the board (between 3 and 10):");
+            System.out.println("Enter size of the board (between 3 and 30):");
             String input = scanner.nextLine();
             try {
                 size = Integer.parseInt(input);
-                if (size >= 3 && size <= 10) {
+                if (size >= 3 && size <= 30) {
                     return size;
                 } else {
-                    System.out.println("Invalid size! Please enter a number between 3 and 10.");
+                    System.out.println("Invalid size! Please enter a number between 3 and 30.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input! Please enter a valid number.");
@@ -38,7 +38,7 @@ public class Main {
         while (true) {
             System.out.println("Enter difficulty (easy, normal, hard):");
             difficulty = scanner.nextLine().toLowerCase();
-            if (difficulty.equals("easy") || difficulty.equals("normal") || difficulty.equals("hard")) {
+            if (difficulty.equalsIgnoreCase("easy") || difficulty.equalsIgnoreCase("normal") || difficulty.equalsIgnoreCase("hard")) {
                 return difficulty;
             } else {
                 System.out.println("Invalid difficulty! Please enter 'easy', 'normal', or 'hard'.");
