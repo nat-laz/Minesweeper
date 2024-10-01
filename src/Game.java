@@ -4,17 +4,17 @@ import java.util.Random;
 public class Game {
     private static int boardSize = 5;
     private static int noOfMines = 3;
-    private static CellCass[][] board;
+    private static Cell[][] board;
     private static boolean[][] minesPlace = new boolean[boardSize][boardSize];
     private static int safeCells;
 
 
 
     public static void initializeBoard() {
-        board = new CellCass[boardSize][boardSize];
+        board = new Cell[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                board[i][j] = new CellCass(i, j);
+                board[i][j] = new Cell(i, j);
             }
         }
         safeCells = boardSize * boardSize - noOfMines;
@@ -63,7 +63,7 @@ public class Game {
 
 
     public static void revealCells(int x, int y) {
-        CellCass cell = board[x][y];
+        Cell cell = board[x][y];
         if (!cell.isHidden()) {
             return;
         }
@@ -91,7 +91,7 @@ public class Game {
         System.out.println("Board right now:");
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                CellCass cell = board[i][j];
+                Cell cell = board[i][j];
                 if (cell.isHidden()) {
                     System.out.print("- ");
                 } else if (cell.isMine()) {

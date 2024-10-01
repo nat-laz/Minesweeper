@@ -1,4 +1,4 @@
-public class CellCass {
+public class Cell {
     private int x;
     private int y;
     private boolean isMine;
@@ -6,7 +6,7 @@ public class CellCass {
     private boolean isHidden;
     private boolean markedAsMine;
 
-    public CellCass(int x, int y) {
+    public Cell(int x, int y) {
         this.x = x;
         this.y = y;
         this.isMine = false;
