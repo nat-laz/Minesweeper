@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try (Scanner s = new Scanner(System.in)) {
-
             setGameParameters(s);
 
             GameUI.start(s);
