@@ -55,7 +55,6 @@ public abstract class UI {
 
         if (Game.getCell(row, col).isMine()) {
             System.out.println("You hit a mine! Game over.");
-            Game.revealAllMines();
             Game.printBoard(true);
             System.exit(0);
         } else {
@@ -102,7 +101,12 @@ public abstract class UI {
 
     private static int handleIntInput() {
         try {
-            return Integer.parseInt(scanner.nextLine());
+            int input = Integer.parseInt(scanner.nextLine());
+            if (input <= 0) {
+                System.out.println("Invalid input: Please enter a number greater than 0.");
+                return -1;
+            }
+            return input;
         } catch (NumberFormatException e) {
             System.out.println("Can't parse this number");
             return -1;

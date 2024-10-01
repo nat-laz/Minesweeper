@@ -46,13 +46,14 @@ public abstract class Game {
     private static void calculateAmountOfMines() {
         int totalBlocks = boardSize * boardSize;
         if (gameDifficulty.equalsIgnoreCase("easy")) {
-            amountOfMines = totalBlocks * 3/10;
+            amountOfMines = (int) Math.round(totalBlocks * 3.0 / 10.0);
         } else if (gameDifficulty.equalsIgnoreCase("normal")) {
-            amountOfMines = totalBlocks/ 2;
+            amountOfMines = totalBlocks / 2;
         } else if (gameDifficulty.equalsIgnoreCase("hard")) {
-            amountOfMines = totalBlocks * 7/10;
+            amountOfMines = (int) Math.round(totalBlocks * 7.0 / 10.0);
         }
     }
+
 
     private static void placeMines() {
         Random rand = new Random();
@@ -154,16 +155,6 @@ public abstract class Game {
                 }
             }
             System.out.println();
-        }
-    }
-
-    public static void revealAllMines() {
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                if (board[i][j].isMine()) {
-                    board[i][j].reveal();
-                }
-            }
         }
     }
 }
