@@ -32,9 +32,16 @@ public abstract class UI {
 
     public static void handleRevealCellOption() {
         System.out.println("Enter the row of the cell to reveal (e.g., '2'):");
-        int row = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter the row of the cell to reveal (e.g., '2'):");
-        int col = Integer.parseInt(scanner.nextLine());
+        int row = handleIntInput() - 1;
+        if (row < 1) {
+            return;
+        }
+
+        System.out.println("Enter the column of the cell to reveal (e.g., '2'):");
+        int col = handleIntInput() - 1;
+        if (col < 1) {
+            return;
+        }
 
         if (!Game.isValid(row, col)) {
             System.out.println("This cell doesn't exists");
@@ -57,9 +64,17 @@ public abstract class UI {
     }
 
     private static void handleMarkMineOption() {
-        System.out.println("Enter the row and column of the cell to mark/unmark as a mine (e.g., '2 3'):");
-        int row = Integer.parseInt(scanner.nextLine()); // add validation
-        int col = Integer.parseInt(scanner.nextLine()); // add validation
+        System.out.println("Enter the row of the cell to mark/unmark as a mine (e.g., '2'):");
+        int row = handleIntInput() - 1;
+        if (row < 1) {
+            return;
+        }
+
+        System.out.println("Enter the column of the cell to mark/unmark as a mine (e.g., '2'):");
+        int col = handleIntInput() - 1;
+        if (col < 1) {
+            return;
+        }
 
         if (!Game.isValid(row, col)) {
             System.out.println("This cell doesn't exists");
@@ -77,11 +92,20 @@ public abstract class UI {
         System.out.println("Cell marked/unmarked as a mine.");
     }
 
-    public static void determineWinner() {
+    private static void determineWinner() {
         if (Game.getSafeCells() == 0) {
             System.out.println("Congratulations! You've won the game!");
             Game.printBoard(true);
             System.exit(0);
+        }
+    }
+
+    private static int handleIntInput() {
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Can't parse this number");
+            return -1;
         }
     }
 
