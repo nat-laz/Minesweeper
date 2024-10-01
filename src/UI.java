@@ -33,13 +33,13 @@ public abstract class UI {
     public static void handleRevealCellOption() {
         System.out.println("Enter the row of the cell to reveal (e.g., '2'):");
         int row = handleIntInput() - 1;
-        if (row < 1) {
+        if (row < 0) {
             return;
         }
 
         System.out.println("Enter the column of the cell to reveal (e.g., '2'):");
         int col = handleIntInput() - 1;
-        if (col < 1) {
+        if (col < 0) {
             return;
         }
 
@@ -66,13 +66,13 @@ public abstract class UI {
     private static void handleMarkMineOption() {
         System.out.println("Enter the row of the cell to mark/unmark as a mine (e.g., '2'):");
         int row = handleIntInput() - 1;
-        if (row < 1) {
+        if (row < 0) {
             return;
         }
 
         System.out.println("Enter the column of the cell to mark/unmark as a mine (e.g., '2'):");
         int col = handleIntInput() - 1;
-        if (col < 1) {
+        if (col < 0) {
             return;
         }
 
