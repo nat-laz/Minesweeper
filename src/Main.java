@@ -1,23 +1,35 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        try (Scanner s = new Scanner(System.in)) {
-            setGameParameters(s);
 
-            GameUI.start(s);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        Game.initialize(5,"easy"); // take input from user
+        Game.countMinesOnBoard();
+        Game.checkMines();
+        Game.printBoard(false);
+
+        while (true) {
+            System.out.println("Choose an action: ");
+            System.out.println("1. Open a cell");
+            System.out.println("2. Mark/unmark a cell as a mine");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    UI.openCell();
+                    break;
+                case 2:
+                    UI.markMine();
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please select 1 or 2.");
+                    break;
+            }
+
+            UI.determineWinner();
         }
     }
-
-    private static void setGameParameters(Scanner s) {
-//        System.out.println("Enter board size");
-//        int size = Integer.parseInt(s.nextLine());
-//        System.out.println("Choose difficulty");
-//        System.out.println("(e)asy, (n)ormal, (h)ard");
-//        String c = s.nextLine();
-            Game.initializeBoard();
-
-    }
-
-
 }
