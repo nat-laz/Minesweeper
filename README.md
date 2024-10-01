@@ -29,8 +29,8 @@
 - The game ends when the player uncovers all safe cells or when they uncover a mine.
 - The program will display a message indicating whether the player won or lost.
 
-### Team Members
+### Project Developer Team
 
-- Alex Bruch
-- Natalie Lazarev
-- Mitali Soti
+- [Alex Bruch](https://github.com/bruch-alex)
+- [Mitali Soti](https://github.com/mitalisoti)
+- [Natalie Lazarev](https://github.com/nat-laz)
