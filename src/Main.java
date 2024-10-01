@@ -5,8 +5,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Game.initializeBoard();
-        Game.placeMines();
+        Game.initialize(5,"easy"); // take input from user
         Game.countMinesOnBoard();
         Game.checkMines();
         Game.printBoard(false);

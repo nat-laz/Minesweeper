@@ -10,7 +10,7 @@ public class UI {
         int col = scanner.nextInt();
 
         if (Game.isValid(row, col)) {
-            if (Game.board[row][col].isMine()) {
+            if (Game.getBoard()[row][col].isMine()) {
                 System.out.println("You hit a mine! Game over.");
                 Game.revealAllMines();
                 Game.printBoard(true);
@@ -30,7 +30,7 @@ public class UI {
         int col = scanner.nextInt();
 
         if (Game.isValid(row, col)) {
-            Cell cell = Game.board[row][col];
+            Cell cell = Game.getCell(row, col);
             if (cell.isHidden()) {
                 cell.setMarkedAsMine(!cell.isMarkedAsMine());
                 System.out.println("Cell marked/unmarked as a mine.");
@@ -44,7 +44,7 @@ public class UI {
     }
 
     public static void determineWinner() {
-        if (Game.safeCells == 0) {
+        if (Game.getSafeCells() == 0) {
             System.out.println("Congratulations! You've won the game!");
             Game.printBoard(false);
             System.exit(0);
