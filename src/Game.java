@@ -4,10 +4,9 @@ import java.util.Random;
 public class Game {
     private static int boardSize = 5;
     private static int noOfMines = 3;
-    private static Cell[][] board;
+    static Cell[][] board;
     private static boolean[][] minesPlace = new boolean[boardSize][boardSize];
-    private static int safeCells;
-
+    static int safeCells;
 
 
     public static void initializeBoard() {
@@ -20,19 +19,37 @@ public class Game {
         safeCells = boardSize * boardSize - noOfMines;
     }
 
-    private static void placeMines(){
+    static void placeMines() {
         Random rand = new Random();
         int placedMines = 0;
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
-                int randomNumber = rand.nextInt(10) + 1;
-                if(randomNumber >= 5){
-                    minesPlace[i][j] = true;
-                }
+
+        while (placedMines < noOfMines) {
+            int i = rand.nextInt(boardSize);
+            int j = rand.nextInt(boardSize);
+
+
+            if (!board[i][j].isMine()) {
+                board[i][j].setMine(true);
                 placedMines++;
+                // Debugging purpose
+                System.out.println("Mine placed at: (" + i + ", " + j + ")");
             }
         }
     }
+
+    // Debugging purpose
+    public static void countMinesOnBoard() {
+        int mineCount = 0;
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (board[i][j].isMine()) {
+                    mineCount++;
+                }
+            }
+        }
+        System.out.println("Total number of mines on the board: " + mineCount);
+    }
+
 
     public static void checkMines() {
         for (int i = 0; i < boardSize; i++) {
@@ -76,7 +93,7 @@ public class Game {
                     int newX = x + i;
                     int newY = y + j;
                     if (isValid(newX, newY)) {
-                        revealCells(newX, newY);  // Reveal neighboring cells
+                        revealCells(newX, newY);
                     }
                 }
             }
@@ -87,12 +104,16 @@ public class Game {
         return row >= 0 && row < boardSize && col >= 0 && col < boardSize;
     }
 
-    public static void printBoard() {
+    public static void printBoard(boolean gameOver) {
         System.out.println("Board right now:");
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 Cell cell = board[i][j];
-                if (cell.isHidden()) {
+                if (gameOver && cell.isMine()) {
+                    System.out.print("M ");
+                } else if (cell.isMarkedAsMine() && !gameOver) {
+                    System.out.print("🚩");
+                } else if (cell.isHidden()) {
                     System.out.print("- ");
                 } else if (cell.isMine()) {
                     System.out.print("M ");
@@ -103,4 +124,17 @@ public class Game {
             System.out.println();
         }
     }
+
+    public static void revealAllMines() {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (board[i][j].isMine()) {
+                    board[i][j].reveal();
+                }
+            }
+        }
+    }
 }
+
+
+
