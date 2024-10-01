@@ -3,18 +3,46 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        initializeGame(scanner);
-        UI.start();
+        try (Scanner scanner = new Scanner(System.in)) {
+            int size = getBoardSize(scanner);
+            String difficulty = getDifficultyLevel(scanner);
+            Game.initialize(size, difficulty);
+            UI.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void initializeGame(Scanner s) {
-        System.out.println("Enter size of the board");
-        int size = Integer.parseInt(s.nextLine()); // add exception handling and input validation and while loop
 
-        System.out.println("Enter difficulty (easy, normal, hard)");
-        String difficulty = s.nextLine(); // add exception handling and input validation and while loop
+    private static int getBoardSize(Scanner scanner) {
+        int size = 0;
+        while (true) {
+            System.out.println("Enter size of the board (between 3 and 30):");
+            String input = scanner.nextLine();
+            try {
+                size = Integer.parseInt(input);
+                if (size >= 3 && size <= 30) {
+                    return size;
+                } else {
+                    System.out.println("Invalid size! Please enter a number between 3 and 30.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a valid number.");
+            }
+        }
+    }
 
-        Game.initialize(size, difficulty);
+
+    private static String getDifficultyLevel(Scanner scanner) {
+        String difficulty = "";
+        while (true) {
+            System.out.println("Enter difficulty (easy, normal, hard):");
+            difficulty = scanner.nextLine().toLowerCase();
+            if (difficulty.equalsIgnoreCase("easy") || difficulty.equalsIgnoreCase("normal") || difficulty.equalsIgnoreCase("hard")) {
+                return difficulty;
+            } else {
+                System.out.println("Invalid difficulty! Please enter 'easy', 'normal', or 'hard'.");
+            }
+        }
     }
 }

@@ -1,26 +1,16 @@
 public final class Cell {
-    private int x;
-    private int y;
+
     private boolean isMine;
     private int minesAround;
     private boolean isHidden;
     private boolean markedAsMine;
 
     public Cell(int x, int y) {
-        this.x = x;
-        this.y = y;
+
         this.isMine = false;
         this.minesAround = 0;
         this.isHidden = true;
         this.markedAsMine = false;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public boolean isMine() {
