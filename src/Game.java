@@ -23,6 +23,7 @@ public abstract class Game {
         boardSize = size;
         gameDifficulty = difficulty;
 
+
         initializeBoard();
         calculateAmountOfMines();
         placeMines();
@@ -43,12 +44,13 @@ public abstract class Game {
     // 3 x 3 = 9 cells
     // 5 x 5 = 25 cells
     private static void calculateAmountOfMines() {
+        int totalBlocks = boardSize * boardSize;
         if (gameDifficulty.equalsIgnoreCase("easy")) {
-            amountOfMines = boardSize;
+            amountOfMines = totalBlocks * 3/10;
         } else if (gameDifficulty.equalsIgnoreCase("normal")) {
-            amountOfMines = boardSize + 2;
+            amountOfMines = totalBlocks/ 2;
         } else if (gameDifficulty.equalsIgnoreCase("hard")) {
-            amountOfMines = boardSize + boardSize;
+            amountOfMines = totalBlocks * 7/10;
         }
     }
 
